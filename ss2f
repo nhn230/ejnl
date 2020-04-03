@@ -1,0 +1,58 @@
+#include <iostream>
+#include <fstream>
+#include <cstring>
+
+using namespace std;
+
+
+int main() {
+//cau a
+    char a[8000][10];
+    char b[99999][10];
+    fstream file1, file2;
+    file1.open("syllables.txt",ios::in);
+    file2.open("t.txt",ios::in);
+   
+    bool flag1=file1.fail();
+    if(flag1==true)
+        cout<<"File không tồn tại!"<<endl;
+    else
+        cout<<"Mở file thành công!"<<endl;
+        
+    bool flag2=file2.fail();
+    if(flag2==true)
+        cout<<"File không tồn tại!"<<endl;
+    else
+        cout<<"Mở file thành công!"<<endl;
+    
+    int n=0;
+    while (file1>>a[n])
+        n++;
+    file1.close();
+    
+    int m=0;
+    while (file2>>b[m])
+        m++;
+    file2.close();
+    
+    int dem=0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j <= m; j++)
+        {
+            if (strcmp(a[i], b[j]) == 0)
+            {
+                dem++;
+                for (int k = i; k < n - 1; k++)
+                {
+                    strcpy(a[k],a[k+1]);
+                }
+            }
+        }
+    }
+    cout<<"Số chữ giống nhau giữa 2 file là: "<<dem<<endl;
+//cau b
+    cout<<"Tỉ lệ phần trăm là: "<<(float)dem/n*100<<"%";
+    return 0;
+}
+
